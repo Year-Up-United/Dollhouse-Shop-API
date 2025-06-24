@@ -90,7 +90,7 @@ public class CategoriesController
         try {
             categoryDao.update(id, category);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "OOPS, OUR BAD!");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "YOU HAVE TO BE AN ADMIN TO ACCESS!");
         }
     }
 
