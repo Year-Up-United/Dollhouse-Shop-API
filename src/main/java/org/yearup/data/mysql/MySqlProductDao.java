@@ -33,11 +33,17 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao
 //                "   AND (price <= ? OR ? = -1) " +
 //                "   AND (color = ? OR ? = '') ";
 
-        categoryId = categoryId == null ? -1 : categoryId;
-        minPrice = minPrice == null ? new BigDecimal("-1") : minPrice;
-        maxPrice = maxPrice == null ? new BigDecimal("-1") : maxPrice;
-        color = color == null ? "" : color;
+        if (categoryId != null){
+            sql.append("AND category_Id =?");
+            parameters.add(categoryId);
+        }
+        if (minPrice != null){
+            sql.append("AND price >= ?");
+            parameters.add(minPrice);
+        }
+        if (maxPrice != null){
 
+        }
         try (Connection connection = getConnection())
         {
             PreparedStatement statement = connection.prepareStatement(sql);
