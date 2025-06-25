@@ -9,6 +9,8 @@ public interface ShoppingCartDao
 
     void addProduct(int userId, int productId, int quantity);
     void updateQuantity(int userId, int productId, int quantity);
-    void clearCart(int userId, int productId, int quantity);
+    void clearCart(int userId);
 
+    // ✅ Clear the entire cart for a user — ignores extra params
+    void clearCart(int userId, int ignoredProductId, int ignoredQuantity);
 }

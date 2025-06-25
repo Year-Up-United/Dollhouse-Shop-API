@@ -84,7 +84,18 @@ public class ShoppingCartController
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "UNABLE TO UPDATE THE CART", e);
         }
     }
-    // add a DELETE method to clear all products from the current users cart
-    // https://localhost:8080/cart
 
+    // add a DELETE method to clear all products from the current users cart
+    @DeleteMapping
+    // https://localhost:8080/cart
+    public void clearCart(Principal principal){
+        try {
+            String username = principal.getName();
+            User user = userDao.getByUserName(username);
+            int userId = user.getId();
+            shoppingCartDao.clearCart(userId);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "UNABLE TO CLEAR THE CART", e);
+        }
+    }
 }
