@@ -20,12 +20,11 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
         super(dataSource);
     }
 
-    @Override
-    public List<Category> getAllCategories()
-    {
+    @Override // gets all categories
+    public List<Category> getAllCategories() {
         // get all categories
         ArrayList<Category> categories = new ArrayList<>();
-
+        // SQL query
         String sql = "SELECT * FROM categories";
 
         try(Connection connection = getConnection()) {
