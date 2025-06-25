@@ -26,7 +26,7 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
         ArrayList<Category> categories = new ArrayList<>();
         // SQL query
         String sql = "SELECT * FROM categories";
-
+       // try catch method w/ prepared statement needed to connect to the database
         try(Connection connection = getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
