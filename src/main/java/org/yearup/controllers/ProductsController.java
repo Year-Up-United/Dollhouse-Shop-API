@@ -12,11 +12,12 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
-@RequestMapping("products")
+@RequestMapping("/products")
 @CrossOrigin
 public class ProductsController
 {
     private ProductDao productDao;
+
 
     @Autowired
     public ProductsController(ProductDao productDao)
@@ -82,7 +83,7 @@ public class ProductsController
     {
         try
         {
-            productDao.create(product);
+            productDao.update(id, product);
         }
         catch(Exception ex)
         {
