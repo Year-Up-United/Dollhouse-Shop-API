@@ -84,11 +84,11 @@ public class MySqlShoppingCartDao implements ShoppingCartDao {
     }
 
     @Override
-    public void clearCart(int userId) {
-
+    public void clearCart(int userId){
+        clearCart(userId, 0, 0);
     }
 
-    // ✅ Clear the entire cart for a user — ignores extra params
+    // Clears the entire cart for a user — ignores extra params
     @Override
     public void clearCart(int userId, int ignoredProductId, int ignoredQuantity) {
         String sql = "DELETE FROM shopping_cart WHERE user_id = ?";
