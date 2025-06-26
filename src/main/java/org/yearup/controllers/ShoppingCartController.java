@@ -2,6 +2,7 @@ package org.yearup.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.yearup.data.ProductDao;
@@ -14,11 +15,13 @@ import org.yearup.models.User;
 import java.security.Principal;
 
 // convert this class to a REST controller
-@RestController
-// maps information from the shopping cart
-@RequestMapping("/shopping_cart")
-@CrossOrigin
 
+// maps information from the shopping cart
+
+@CrossOrigin(origins = "http://localhost:63342")
+@RestController
+@RequestMapping("/cart")
+@PreAuthorize("isAuthenticated()")
 
 // only logged in users should have access to these actions
 public class ShoppingCartController
@@ -66,7 +69,7 @@ public class ShoppingCartController
             int userId = user.getId();
             shoppingCartDao.addProduct(userId, productId, 1);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "UNABLE TO UPDATE YOUR CART", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "UNABLE TO ADD TO YOUR CART", e);
         }
     }
 
