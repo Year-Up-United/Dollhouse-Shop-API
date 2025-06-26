@@ -42,7 +42,6 @@ public class CategoriesController
     @GetMapping
     @PreAuthorize("permitAll()")
     public List<Category> getAll() {
-        System.out.println("test");
         // find and return all categories
         try {
             return categoryDao.getAllCategories();
