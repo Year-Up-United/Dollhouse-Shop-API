@@ -24,18 +24,18 @@ public class MySqlProfileDao extends MySqlDaoBase implements ProfileDao
 
         try(Connection connection = getConnection())
         {
-            PreparedStatement ps = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, profile.getUserId());
-            ps.setString(2, profile.getFirstName());
-            ps.setString(3, profile.getLastName());
-            ps.setString(4, profile.getPhone());
-            ps.setString(5, profile.getEmail());
-            ps.setString(6, profile.getAddress());
-            ps.setString(7, profile.getCity());
-            ps.setString(8, profile.getState());
-            ps.setString(9, profile.getZip());
+            PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+            preparedStatement.setInt(1, profile.getUserId());
+            preparedStatement.setString(2, profile.getFirstName());
+            preparedStatement.setString(3, profile.getLastName());
+            preparedStatement.setString(4, profile.getPhone());
+            preparedStatement.setString(5, profile.getEmail());
+            preparedStatement.setString(6, profile.getAddress());
+            preparedStatement.setString(7, profile.getCity());
+            preparedStatement.setString(8, profile.getState());
+            preparedStatement.setString(9, profile.getZip());
 
-            ps.executeUpdate();
+            preparedStatement.executeUpdate();
 
             return profile;
         }
@@ -51,9 +51,9 @@ public class MySqlProfileDao extends MySqlDaoBase implements ProfileDao
         try(Connection connection = getConnection()){
 
             String sql = "SELECT * FROM profiles WHERE user_id = ?";
-            PreparedStatement pstmt = connection.prepareStatement(sql);
-            pstmt.setInt(1,id);
-            ResultSet rs = pstmt.executeQuery();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1,id);
+            ResultSet rs = preparedStatement.executeQuery();
 
             while(rs.next()){
 
@@ -78,19 +78,19 @@ public class MySqlProfileDao extends MySqlDaoBase implements ProfileDao
 
             String sql = "UPDATE profiles" +
                     " SET  first_name = ? " +
-                //    "   , las = ? " +
-                 //   "   , category_id = ? " +
-                //    "   , description = ? " +
-                 //   "   , color = ? " +
-                 //   "   , image_url = ? " +
-                 //   "   , stock = ? " +
-                 //   "   , featured = ? " +
+                    "   , last_name = ? " +
+                    "   , phone = ? " +
+                    "   , email = ? " +
+                    "   , address = ? " +
+                    "   , city = ? " +
+                    "   , state = ? " +
+                    "   , zip = ? " +
                     " WHERE user_id = ?;";
 
-            PreparedStatement pstmt = connection.prepareStatement(sql);
-            pstmt.setString(1,profile.getFirstName());
-            pstmt.setInt(2,id);
-            pstmt.executeUpdate();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,profile.getFirstName());
+            preparedStatement.setInt(2,id);
+            preparedStatement.executeUpdate();
 
         }catch(SQLException ex){
             System.out.println(ex.getLocalizedMessage());
