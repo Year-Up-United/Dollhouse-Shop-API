@@ -19,6 +19,7 @@ public class MySqlProfileDao extends MySqlDaoBase implements ProfileDao
     @Override
     public Profile create(Profile profile)
     {
+        // SQL query to create a profile
         String sql = "INSERT INTO profiles (user_id, first_name, last_name, phone, email, address, city, state, zip) " +
                 " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -50,7 +51,9 @@ public class MySqlProfileDao extends MySqlDaoBase implements ProfileDao
 
         try(Connection connection = getConnection()){
 
+            // SQL query to get the profile by User ID
             String sql = "SELECT * FROM profiles WHERE user_id = ?";
+
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1,id);
             ResultSet rs = preparedStatement.executeQuery();
@@ -71,11 +74,11 @@ public class MySqlProfileDao extends MySqlDaoBase implements ProfileDao
 
 
 // make update method
-
     public Profile update(int id, Profile profile) {
 
         try(Connection connection = getConnection()) {
 
+            // SQL query to update all fields in the profile
             String sql = "UPDATE profiles" +
                     " SET  first_name = ? " +
                     "   , last_name = ? " +
