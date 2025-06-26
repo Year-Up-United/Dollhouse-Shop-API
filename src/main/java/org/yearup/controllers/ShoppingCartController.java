@@ -42,6 +42,7 @@ public class ShoppingCartController
     // each method in this controller requires a Principal object as a parameter
     // GET cart
     @GetMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public ShoppingCart getCart(Principal principal) {
         try {
             // get the currently logged in username
@@ -63,19 +64,21 @@ public class ShoppingCartController
     @PostMapping("/products/{productId}")
     @ResponseStatus(value = HttpStatus.CREATED)
     // https://localhost:8080/cart/products/15 (15 is the productId to be added
-    public void addToCart(@PathVariable int productId, Principal principal){
+    public ShoppingCart addToCart(@PathVariable int productId, Principal principal){
         try {
             String username = principal.getName();
             User user = userDao.getByUserName(username);
             int userId = user.getId();
             shoppingCartDao.addProduct(userId, productId, 1);
+            return shoppingCartDao.getByUserId(userId);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "UNABLE TO ADD TO YOUR CART", e);
         }
     }
 
     // add a PUT method to update an existing product in the cart - the url should be
-    @PutMapping
+    @PutMapping("/products/{productId}")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasROLE('ROLE_USER')")
     // https://localhost:8080/cart/products/15 (15 is the productId to be updated)
     // the BODY should be a ShoppingCartItem - quantity is the only value that will be updated
     public void updateCartItem(@PathVariable int productId, @RequestBody ShoppingCartItem item, Principal principal) {
@@ -90,16 +93,15 @@ public class ShoppingCartController
     }
 
     // add a DELETE method to clear all products from the current users cart
-    @DeleteMapping
+    @DeleteMapping("")
     // https://localhost:8080/cart
-    public void clearCart(Principal principal){
-        try {
-            String username = principal.getName();
-            User user = userDao.getByUserName(username);
-            int userId = user.getId();
-            shoppingCartDao.clearCart(userId);
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "UNABLE TO CLEAR THE CART", e);
-        }
+    public ShoppingCart clearCart(Principal principal){
+       User user = userDao.getByUserName(principal.getName());
+
+       if (user == null){
+           throw new ResponseStatusException(HttpStatus.NOT_FOUND, "USER NOT FOUND");
+       }
+       shoppingCartDao.clearCart(user.getId());
+       return shoppingCartDao.getByUserId(user.getId());
     }
 }

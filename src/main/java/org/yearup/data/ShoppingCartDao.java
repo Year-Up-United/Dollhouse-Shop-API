@@ -13,4 +13,5 @@ public interface ShoppingCartDao
 
     // ✅ Clear the entire cart for a user — ignores extra params
     void clearCart(int userId, int ignoredProductId, int ignoredQuantity);
+
 }

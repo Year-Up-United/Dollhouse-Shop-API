@@ -1,6 +1,7 @@
 package org.yearup.data.mysql;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.yearup.models.Profile;
 import org.yearup.data.ProfileDao;
 
@@ -43,5 +44,59 @@ public class MySqlProfileDao extends MySqlDaoBase implements ProfileDao
             throw new RuntimeException(e);
         }
     }
+
+    public Profile getProfileById(int id){
+        Profile profile = new Profile();
+
+        try(Connection connection = getConnection()){
+
+            String sql = "SELECT * FROM profiles WHERE user_id = ?";
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setInt(1,id);
+            ResultSet rs = pstmt.executeQuery();
+
+            while(rs.next()){
+
+                profile.setUserId(rs.getInt(1));
+                profile.setFirstName(rs.getString(2));
+            }
+
+        }catch(SQLException ex){
+            System.out.println(ex.getLocalizedMessage());
+        }
+
+        return profile;
+    }
+
+
+
+// make update method
+
+    public Profile update(int id, Profile profile) {
+
+        try(Connection connection = getConnection()) {
+
+            String sql = "UPDATE profiles" +
+                    " SET  first_name = ? " +
+                //    "   , las = ? " +
+                 //   "   , category_id = ? " +
+                //    "   , description = ? " +
+                 //   "   , color = ? " +
+                 //   "   , image_url = ? " +
+                 //   "   , stock = ? " +
+                 //   "   , featured = ? " +
+                    " WHERE user_id = ?;";
+
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1,profile.getFirstName());
+            pstmt.setInt(2,id);
+            pstmt.executeUpdate();
+
+        }catch(SQLException ex){
+            System.out.println(ex.getLocalizedMessage());
+        }
+        return profile;
+    }
+
 
 }
