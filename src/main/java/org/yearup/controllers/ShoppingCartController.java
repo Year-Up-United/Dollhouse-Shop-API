@@ -94,6 +94,7 @@ public class ShoppingCartController
 
     // add a DELETE method to clear all products from the current users cart
     @DeleteMapping("")
+
     // https://localhost:8080/cart
     public ShoppingCart clearCart(Principal principal){
        User user = userDao.getByUserName(principal.getName());
