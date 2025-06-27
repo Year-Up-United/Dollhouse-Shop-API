@@ -218,11 +218,16 @@ This project demonstrates proficiency in:
 
 ## ☆ SCREENSHOTS ☆ ##
 
-**☆ BACK END CODE ☆**
+**☆ BACK END CODE**
+
 ![Screenshot 2025-06-27 073913](https://github.com/user-attachments/assets/05bdbc3c-25f1-480a-9453-6df87754e7f1)
-**☆ POSTMAN ☆**
+
+**☆ POSTMAN**
+
 ![Screenshot 2025-06-26 191213](https://github.com/user-attachments/assets/53478623-609c-4cde-84ee-1d62ae14b1b9)
-**☆ SQL ☆**
+
+**☆ SQL**
+
 ![Screenshot 2025-06-26 191240](https://github.com/user-attachments/assets/6bdd83e5-517b-43f1-bc89-aa301f16be59)
 
 
